@@ -8,6 +8,7 @@ public class PlayerMpvement : MonoBehaviour
 {
 
     [SerializeField] private float _speed;
+    [SerializeField] private float _rotationSpeed;
     private Rigidbody2D _rigidBody;
     private Vector2 _movementInput;
     private Vector2 _smoothedMovementInput;
@@ -20,13 +21,29 @@ public class PlayerMpvement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        SetPlayerVelocity();
+        RotateInDirectionOfInput();
+    }
+
+    private void SetPlayerVelocity()
+    {
         _smoothedMovementInput = Vector2.SmoothDamp(
-            _smoothedMovementInput,
-            _movementInput,
-            ref _movementInputSmoothVelocity,
-        0.1f);
+                    _smoothedMovementInput,
+                    _movementInput,
+                    ref _movementInputSmoothVelocity,
+                0.1f);
 
         _rigidBody.linearVelocity = _smoothedMovementInput * _speed;
+    }
+    private void RotateInDirectionOfInput()
+    {
+        if (_movementInput != Vector2.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(transform.forward, _smoothedMovementInput);
+            Quaternion rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
+
+            _rigidBody.MoveRotation(rotation);
+        }
     }
 
     private void OnMove(InputValue inputValue)
