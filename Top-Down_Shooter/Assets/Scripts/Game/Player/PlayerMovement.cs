@@ -10,6 +10,8 @@ public class PlayerMpvement : MonoBehaviour
     [SerializeField] private float _speed;
     private Rigidbody2D _rigidBody;
     private Vector2 _movementInput;
+    private Vector2 _smoothedMovementInput;
+    private Vector2 _movementInputSmoothVelocity;
 
     private void Awake()
     {
@@ -18,7 +20,13 @@ public class PlayerMpvement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _rigidBody.linearVelocity = _movementInput * _speed;
+        _smoothedMovementInput = Vector2.SmoothDamp(
+            _smoothedMovementInput,
+            _movementInput,
+            ref _movementInputSmoothVelocity,
+        0.1f);
+
+        _rigidBody.linearVelocity = _smoothedMovementInput * _speed;
     }
 
     private void OnMove(InputValue inputValue)
