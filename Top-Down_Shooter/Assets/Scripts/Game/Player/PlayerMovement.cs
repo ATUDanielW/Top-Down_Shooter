@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float _speed;
     [SerializeField] private float _rotationSpeed;
+    [SerializeField] private float _screenBorder;
     private Rigidbody2D _rigidBody;
     private Vector2 _movementInput;
     private Vector2 _smoothedMovementInput;
@@ -47,12 +48,14 @@ public class PlayerMovement : MonoBehaviour
         //passing the position of the player to convert it to screen coordinates
         Vector2 screenPosition = _camera.WorldToScreenPoint(transform.position);
         //checking if the player is leaving the border and if so stopping their vlocity left and right X axis
-        if((screenPosition.x <0 && _rigidBody.linearVelocity.x < 0) || (screenPosition.x > _camera.pixelWidth && _rigidBody.linearVelocity.x > 0))
+        if((screenPosition.x <_screenBorder && _rigidBody.linearVelocity.x < 0) || 
+        (screenPosition.x > _camera.pixelWidth - _screenBorder && _rigidBody.linearVelocity.x > 0))
         {
             _rigidBody.linearVelocity = new Vector2(0, _rigidBody.linearVelocity.y);
         }
         //Top or bottom Y axis
-        if((screenPosition.y <0 && _rigidBody.linearVelocity.y < 0) || (screenPosition.y > _camera.pixelHeight && _rigidBody.linearVelocity.y > 0))
+        if((screenPosition.y < _screenBorder && _rigidBody.linearVelocity.y < 0) || 
+        (screenPosition.y > _camera.pixelHeight - _screenBorder && _rigidBody.linearVelocity.y > 0))
         {
             _rigidBody.linearVelocity = new Vector2(_rigidBody.linearVelocity.x, 0);
         }
