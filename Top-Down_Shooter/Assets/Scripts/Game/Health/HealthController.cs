@@ -15,13 +15,21 @@ public class HealthController : MonoBehaviour
         }
     }
 
+    public bool IsInvincible {get; set;}
+
     public UnityEvent OnDied;
+    public UnityEvent OnDamaged;
 
     public void TakeDamage(float damageAmount)
     {
         if(_currentHealth == 0)
         {
             return;
+        }
+
+        if (IsInvincible)
+        {
+             return;
         }
 
         _currentHealth -=damageAmount;
@@ -34,6 +42,11 @@ public class HealthController : MonoBehaviour
         if(_currentHealth == 0)
         {
             OnDied.Invoke();
+        }
+        //adding event so that after player is damaged it will become invicible for a bit so that he wont loose all the health per frame
+        else
+        {
+            OnDamaged.Invoke();
         }
 
     }
