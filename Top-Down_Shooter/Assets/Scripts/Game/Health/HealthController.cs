@@ -1,5 +1,6 @@
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class HealthController : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class HealthController : MonoBehaviour
         }
     }
 
+    public UnityEvent OnDied;
+
     public void TakeDamage(float damageAmount)
     {
         if(_currentHealth == 0)
@@ -26,6 +29,11 @@ public class HealthController : MonoBehaviour
         if (_currentHealth < 0)
         {
             _currentHealth = 0;
+        }
+        //when this event happens player will die
+        if(_currentHealth == 0)
+        {
+            OnDied.Invoke();
         }
 
     }
