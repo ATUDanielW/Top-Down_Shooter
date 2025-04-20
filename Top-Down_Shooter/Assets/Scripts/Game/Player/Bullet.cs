@@ -18,8 +18,10 @@ public class Bullet : MonoBehaviour
         //check if bullet collided with enemy, check by cheking enemy movmenet commponent
         if(collision.GetComponent<EnemyMovement>())
         {
+
+            HealthController healthController = collision.GetComponent<HealthController>();
             //if collided destroy components (Enemy and Bullet)
-            Destroy (collision.gameObject);
+            healthController.TakeDamage(10);
             Destroy(gameObject);
         }
     }
