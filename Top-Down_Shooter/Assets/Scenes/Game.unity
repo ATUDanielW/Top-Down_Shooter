@@ -226,6 +226,7 @@ GameObject:
   - component: {fileID: 365547014}
   - component: {fileID: 365547016}
   - component: {fileID: 365547017}
+  - component: {fileID: 365547018}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -481,7 +482,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54c635e70c6f9104998b73a6cabed217, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _invincibilityDuration: 0
+  _flashColor: {r: 1, g: 1, b: 1, a: 0.50980395}
+  _invincibilityDuration: 3
+  _numberOfFlashes: 10
 --- !u!114 &365547015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -543,6 +546,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &365547018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 365547005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 444889747c13124498972a52b882f624, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &392695537
 GameObject:
   m_ObjectHideFlags: 0
@@ -1237,6 +1252,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1410052195}
   m_CullTransparentMesh: 1
+--- !u!1 &1510344606
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1510344608}
+  - component: {fileID: 1510344607}
+  m_Layer: 0
+  m_Name: Collectable Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1510344607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1510344606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c58bda9dcafd4e440951cfd8fde950f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _collectablePrefabs:
+  - {fileID: 3599665081534111655, guid: 29028ada711212f4c8f333e474132d84, type: 3}
+--- !u!4 &1510344608
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1510344606}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 11.789567, y: -10.875252, z: -0.18396994}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1533622069
 GameObject:
   m_ObjectHideFlags: 0
@@ -1655,3 +1716,4 @@ SceneRoots:
   - {fileID: 1895127022}
   - {fileID: 2077298219}
   - {fileID: 245774244}
+  - {fileID: 1510344608}
