@@ -11,13 +11,18 @@ public class SpriteFlash : MonoBehaviour
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
+    public void StartFlash(float flashDuration, Color flashColor, int numberOfFlashes)
+    {
+        StartCoroutine(FlashCoroutine(flashDuration, flashColor, numberOfFlashes));
+    }
+
     public IEnumerator FlashCoroutine(float flashDuration, Color flashColor, int numberOfFlashes)
     {
         Color startColor = _spriteRenderer.color;
         float elapsedFlashTime = 0;
         float elapsedFlashPercentage = 0;
 
-        while(elapsedFlashTime < flashDuration)
+        while (elapsedFlashTime < flashDuration)
         {
             elapsedFlashTime += Time.deltaTime;
             elapsedFlashPercentage = elapsedFlashTime / flashDuration;

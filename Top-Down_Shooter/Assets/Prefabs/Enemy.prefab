@@ -19,6 +19,8 @@ GameObject:
   - component: {fileID: 2572783795726624580}
   - component: {fileID: 6752999406688013402}
   - component: {fileID: 4992868604418172230}
+  - component: {fileID: 3697785070149254724}
+  - component: {fileID: 1920590866505585962}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -264,7 +266,19 @@ MonoBehaviour:
         m_CallState: 2
   OnDamaged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920590866505585962}
+        m_TargetAssemblyTypeName: EnemyDamageFlash, Assembly-CSharp
+        m_MethodName: StartFlash
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnHealthChange:
     m_PersistentCalls:
       m_Calls: []
@@ -305,7 +319,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0f0131d3b1edfc43973828518e0c124, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _chanceOfCollectableDrop: 0.3
+  _chanceOfCollectableDrop: 0.2
+--- !u!114 &3697785070149254724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8392623698204972961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 444889747c13124498972a52b882f624, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1920590866505585962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8392623698204972961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f86d9ae83525fc941836202ec7b2447b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _flashDuration: 0.2
+  _flashColor: {r: 0.8156863, g: 0, b: 0, a: 1}
+  _numberOfFlashes: 1
 --- !u!1 &8695063007910985594
 GameObject:
   m_ObjectHideFlags: 0
