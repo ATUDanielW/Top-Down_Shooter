@@ -26,6 +26,8 @@ public class EnemyMovement : MonoBehaviour
     private float _changeDirectionCooldown;
     private Camera _camera;
     private RaycastHit2D[] _obstacleCollisions;
+    private float _obstacleAvoidanceCooldown;
+    private Vector2 _obstacleAvoidanceTargetDirection;
 
     private void Awake()
     {
@@ -92,6 +94,8 @@ public class EnemyMovement : MonoBehaviour
 
     private void HandleObstacles()
     {
+        _obstacleAvoidanceCooldown -= Time.deltaTime;
+
         var contactFilter = new ContactFilter2D();
         contactFilter.SetLayerMask(_obstacleLayerMask);
 
@@ -113,7 +117,13 @@ public class EnemyMovement : MonoBehaviour
                 continue;
             }
 
-            var targetRotation = Quaternion.LookRotation(transform.forward, obstacleCollision.normal);
+            if (_obstacleAvoidanceCooldown <= 0)
+            {
+                _obstacleAvoidanceTargetDirection = obstacleCollision.normal;
+                _obstacleAvoidanceCooldown = 0.5f;
+            }
+
+            var targetRotation = Quaternion.LookRotation(transform.forward, _obstacleAvoidanceTargetDirection);
             var rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
 
             _targetDirection = rotation * Vector2.up;
