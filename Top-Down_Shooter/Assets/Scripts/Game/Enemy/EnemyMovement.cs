@@ -113,7 +113,10 @@ public class EnemyMovement : MonoBehaviour
                 continue;
             }
 
-            _targetDirection = obstacleCollision.normal;
+            var targetRotation = Quaternion.LookRotation(transform.forward, obstacleCollision.normal);
+            var rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
+
+            _targetDirection = rotation * Vector2.up;
             break;
         }
     }
