@@ -11,14 +11,21 @@ public class EnemyMovement : MonoBehaviour
 
     [SerializeField] private float _speed;
 
-    [SerializeField]private float _rotationSpeed;
+    [SerializeField] private float _rotationSpeed;
     [SerializeField] private float _screenBorder;
+
+    [SerializeField] private float _obstacleCheckCircleRadius;
+
+    [SerializeField] private float _obstacleCheckDistance;
+
+    [SerializeField] private LayerMask _obstacleLayerMask;
     
     private Rigidbody2D _rigidbody;
     private PlayerAwarenessController _playerAwarenessController;
     private Vector2 _targetDirection;
     private float _changeDirectionCooldown;
     private Camera _camera;
+    private RaycastHit2D[] _obstacleCollisions;
 
     private void Awake()
     {
@@ -26,6 +33,7 @@ public class EnemyMovement : MonoBehaviour
         _playerAwarenessController = GetComponent<PlayerAwarenessController>();
         _targetDirection = transform.up;//this means that the firt direction they are moving is the direction they facing
         _camera = Camera.main;
+        _obstacleCollisions = new RaycastHit2D[10];
     }
 
     void FixedUpdate()
@@ -33,13 +41,15 @@ public class EnemyMovement : MonoBehaviour
         UpdateTargetDirection();
         RotateTowardsTarget();
         SetVelocity();
-        HandleEnemyOffScreen();
+        
     }
 
     private void UpdateTargetDirection()
     {
         HandleRandomDirectionChange(); // call this method before the spotting of player so that they wonder around rndomly
         HandlePlayerTargeting();// call over method that detects player
+        HandleEnemyOffScreen();
+        HandleObstacles();
         
     }
 
@@ -80,10 +90,38 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
+    private void HandleObstacles()
+    {
+        var contactFilter = new ContactFilter2D();
+        contactFilter.SetLayerMask(_obstacleLayerMask);
+
+        int numberOfCollisions = Physics2D.CircleCast(
+            transform.position,
+            _obstacleCheckCircleRadius,
+            transform.up,
+            contactFilter,
+            _obstacleCollisions,
+            _obstacleCheckDistance
+        );
+
+        for (int index = 0; index < numberOfCollisions; index++)
+        {
+            var obstacleCollision = _obstacleCollisions[index];
+
+            if (obstacleCollision.collider.gameObject == gameObject)
+            {
+                continue;
+            }
+
+            _targetDirection = obstacleCollision.normal;
+            break;
+        }
+    }
+
 
     private void RotateTowardsTarget()
     {
-        
+
 
         Quaternion targetRotation = Quaternion.LookRotation(transform.forward, _targetDirection);
         Quaternion rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
