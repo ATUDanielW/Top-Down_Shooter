@@ -3,8 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-
     [SerializeField] private float _timeToWaitBeforeExit;
+    [SerializeField] private SceneController _sceneController;
 
     public void OnPlayerDied()
     {
@@ -13,6 +13,6 @@ public class GameManager : MonoBehaviour
 
     private void EndGame()
     {
-        SceneManager.LoadScene("Main Menu");
+        _sceneController.LoadScene("Main Menu");
     }
 }
