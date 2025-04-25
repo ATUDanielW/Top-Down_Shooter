@@ -1,10 +1,5 @@
-using System;
-using System.Security.Cryptography;
-using NUnit.Framework.Internal;
 using Unity.Mathematics;
-using UnityEditor.Tilemaps;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class EnemyMovement : MonoBehaviour
 {
