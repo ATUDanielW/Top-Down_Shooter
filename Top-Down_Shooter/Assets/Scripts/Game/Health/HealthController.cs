@@ -4,76 +4,51 @@ using UnityEngine.Events;
 
 public class HealthController : MonoBehaviour
 {
-   [SerializeField]private float _currentHealth;
-   [SerializeField]private float _maximumHealth;
+ [SerializeField] private float _currentHealth;
+[SerializeField] private float _maximumHealth;
 
-    public float RemainingHealthPercentage
+public float RemainingHealthPercentage => _currentHealth / _maximumHealth;
+
+public bool IsInvincible { get; set; }
+
+public UnityEvent OnDied;
+public UnityEvent OnDamaged;
+public UnityEvent OnHealthChange;
+
+public void TakeDamage(float damageAmount)
+{
+    // Exit early if already dead or invincible
+    if (_currentHealth == 0 || IsInvincible) return;
+
+    _currentHealth -= damageAmount;
+    OnHealthChange.Invoke();
+
+    if (_currentHealth < 0)
+        _currentHealth = 0;
+
+    if (_currentHealth == 0)
     {
-        get
-        {
-            return _currentHealth / _maximumHealth;
-        }
+        // Trigger death event
+        OnDied.Invoke();
     }
-
-    public bool IsInvincible {get; set;}
-
-    public UnityEvent OnDied;
-    public UnityEvent OnDamaged;
-    public UnityEvent OnHealthChange;
-
-    public void TakeDamage(float damageAmount)
+    else
     {
-        if(_currentHealth == 0)
-        {
-            return;
-        }
-
-        if (IsInvincible)
-        {
-             return;
-        }
-
-        _currentHealth -=damageAmount;
-
-        OnHealthChange.Invoke();
-
-        if (_currentHealth < 0)
-        {
-            _currentHealth = 0;
-        }
-        //when this event happens player will die
-        if(_currentHealth == 0)
-        {
-            OnDied.Invoke();
-        }
-        //adding event so that after player is damaged it will become invicible for a bit so that he wont loose all the health per frame
-        else
-        {
-            OnDamaged.Invoke();
-        }
-
+        // Trigger damaged, event start invincibility, flash effect
+        OnDamaged.Invoke();
     }
+}
 
-    public void AddHealth(float amountToAdd)
-    {
-        if (_currentHealth == _maximumHealth)
-        {
-            return;
-        }
+public void AddHealth(float amountToAdd)
+{
+    // If already at max health, do nothing
+    if (_currentHealth == _maximumHealth) return;
 
-        _currentHealth += amountToAdd;
+    _currentHealth += amountToAdd;
+    OnHealthChange.Invoke();
 
-        OnHealthChange.Invoke();
-        
-        if(_currentHealth > _maximumHealth)
-        {
-            _currentHealth = _maximumHealth;
-        }
-    }
-
-
-
-
+    if (_currentHealth > _maximumHealth)
+        _currentHealth = _maximumHealth;
+}
 
 
 

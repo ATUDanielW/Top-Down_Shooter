@@ -3,16 +3,21 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private float _timeToWaitBeforeExit;
-    [SerializeField] private SceneController _sceneController;
+  // Time to wait before transitioning to main menu after player death
+[SerializeField] private float _timeToWaitBeforeExit;
 
-    public void OnPlayerDied()
-    {
-        Invoke(nameof(EndGame), _timeToWaitBeforeExit);
-    }
+// Reference to the scene controller
+[SerializeField] private SceneController _sceneController;
 
-    private void EndGame()
-    {
-        _sceneController.LoadScene("Main Menu");
-    }
+public void OnPlayerDied()
+{
+    // Waits for delay before ending the game
+    Invoke(nameof(EndGame), _timeToWaitBeforeExit);
+}
+
+private void EndGame()
+{
+    // Loads the Main Menu scene
+    _sceneController.LoadScene("Main Menu");
+}
 }

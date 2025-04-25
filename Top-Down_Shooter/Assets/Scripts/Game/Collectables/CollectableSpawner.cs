@@ -3,13 +3,15 @@ using UnityEngine;
 
 public class CollectableSpawner : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> _collectablePrefabs;
+[SerializeField] private List<GameObject> _collectablePrefabs;
 
-    public void SpawnCollectable(Vector2 position)
-    {
-        int index = Random.Range(0, _collectablePrefabs.Count);
-        var selectedCollectable = _collectablePrefabs[index];
+public void SpawnCollectable(Vector2 position)
+{
+    // Randomly select a collectable prefab from the list
+    int index = Random.Range(0, _collectablePrefabs.Count);
+    var selectedCollectable = _collectablePrefabs[index];
 
-        Instantiate(selectedCollectable, position, Quaternion.identity);
-    }
+    // Spawn the collectable at the specified position
+    Instantiate(selectedCollectable, position, Quaternion.identity);
+}
 }

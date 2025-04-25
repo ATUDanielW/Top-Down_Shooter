@@ -21,6 +21,7 @@ public class PlayerDamageInvincibility : MonoBehaviour
 
     public void StartInvincibility()
     {
+        // Start invincibility effect via controller
         _invincibilityController.StartInvincibility(_invincibilityDuration, _flashColor, _numberOfFlashes);
     }
 }

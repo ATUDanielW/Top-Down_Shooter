@@ -29,7 +29,7 @@ public class Shoot : MonoBehaviour
                 FireBullet();
 
                 _lastFireTime = Time.time;
-                //every time we press fire it will set it to true and once delay is finished it will set it back to false
+                //every time press fire it will set it to true and once delay is finished it will set it back to false
                 _fireSingle = false;
             }
             
